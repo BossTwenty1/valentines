@@ -20,11 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="front pocket"></div>
                     <div class="letter">
                        <p class="words line1">I'm vvv lucky to have you in my life :D</p>
-<p class="words line2">Every moment with you is a treasure, and I cherish</p>
-<p class="words line3">the love and happiness you bring into my world.</p>
-<p class="words line4">Can't wait to celebrate Valentine's with you!</p>
-<p class="words line5">I love you more than you'll ever know, today and always. ❤️</p>
-<p class="words line6">- your loving bf</p>
+                        <p class="words line2">Can't wait to celebrate valentine's wt you!</p>
+                        <p class="words line3">I love you more than you’ll ever know!</p>
+                        <p class="words line4">- your loving bf</p>
 
                     </div>
                 </div>
