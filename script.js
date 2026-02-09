@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("startButton").addEventListener("click", function () {
         let content = document.getElementById("content");
 
-        // Clear everything inside the div and replace it with full content
+        
         content.innerHTML = `
             <div class="envelope-wrapper">
                 <div id="envelope" class="close">
@@ -25,8 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         <p class="words line4">- your loving bf</p>
                     </div>
                 </div>
-            </div>
-            <div class="continue">
+            </div>            <div style="text-align: center; margin-top: 30px; font-size: 18px; color: #FF6863; font-weight: bold;">
+                Click the envelope to open it!
+            </div>            <div class="continue">
                 <button id="continue">Continue</button>
             </div>
 				<style>
