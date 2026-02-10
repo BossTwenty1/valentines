@@ -14,21 +14,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
         
         content.innerHTML = `
-            <div class="envelope-wrapper">
-                <div id="envelope" class="close">
-                    <div class="front flap"></div>
-                    <div class="front pocket"></div>
-                    <div class="letter">
-                        <p class="words line1">I'm vvv lucky to have you in my life :D</p>
-                        <p class="words line2">Can't wait to celebrate valentine's wt you!</p>
-                        <p class="words line3">I love you more than you’ll ever know!</p>
-                        <p class="words line4">- your loving bf</p>
+            <div style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;" id="mainEnvelopeContainer">
+                <div class="envelope-wrapper" id="envelopeSection">
+                    <div id="envelope" class="close">
+                        <div class="front flap"></div>
+                        <div class="front pocket"></div>
+                        <div class="letter">
+                            <div style="padding: 10px; font-size: 10px; line-height: 1.4; color: black; font-family: 'Caveat', sans-serif; text-align: center;">
+                                Click to read...
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>            <div style="text-align: center; margin-top: 30px; font-size: 18px; color: #FF6863; font-weight: bold;">
-                Click the envelope to open it!
-            </div>            <div class="continue">
-                <button id="continue">Continue</button>
+                <div style="text-align: center; font-size: 18px; color: #FF6863; font-weight: bold;">
+                    Click the envelope to open it!
+                </div>
+                <div class="continue">
+                    <button id="continue">Continue</button>
+                </div>
             </div>
 				<style>
 					@font-face {
@@ -42,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					}
 
 					.envelope-wrapper {
-						height: 380px;
+						height: auto;
 					}
 
 					#envelope {
@@ -51,12 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
 						width: 280px;
 						border-bottom-left-radius: 6px;
 						border-bottom-right-radius: 6px;
-						margin-left: auto;
-						margin-right: auto;
-						top: 50%;
 						background-color: #FF6863;
 						box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 						cursor: pointer;
+						overflow: hidden;
 					}
 
 					.front {
@@ -87,7 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
 						position: relative;
 						background-color: white;
 						width: 90%;
-						height: 95%;
+						height: auto;
+						min-height: 95%;
 						top: 0%;
 						border-radius: 10px;
 						box-shadow: 0 2px 26px rgba(0, 0, 0, .12);
@@ -131,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					}
 
 					.open .letter {
-						transform: translatey(-80px);
+						transform: translatey(-180px);
 						transition: transform 0.4s 0.6s ease, z-index 0.6s;
 						z-index: 2;
 					}
@@ -229,15 +231,51 @@ document.addEventListener("DOMContentLoaded", function () {
 				</style>
         `;
 
+        // Store the envelope click handler function for reuse
+        const openEnvelopeHandler = function () {
+            // Replace the envelope with a large readable letter
+            const envelopeSection = document.getElementById("envelopeSection");
+            envelopeSection.innerHTML = `
+                <div style="background: white; border-radius: 15px; padding: 40px; max-width: 600px; margin: 20px auto; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); font-family: 'Caveat', sans-serif; line-height: 2; font-size: 24px; color: black; text-align: center;">
+                    <p style="margin: 0 0 20px 0; font-size: 28px;">Hey love 🤍</p>
+                    <p style="margin: 0 0 15px 0; text-align: left;">Another Valentine's is coming, and this one feels extra special because we'll be celebrating our anniversary too on Feb 15. I still can't believe how blessed I am to have you in my life.</p>
+                    <p style="margin: 0 0 15px 0; text-align: left;">You've brought so much happiness and peace into my world. The simple moments with you mean the most to me. Every day I get to love you is something I don't take for granted.</p>
+                    <p style="margin: 0 0 15px 0; text-align: left;">I'm really looking forward to celebrating our love on Feb 15, Valentine's and our anniversary, all in one beautiful day.</p>
+                    <p style="margin: 0 0 15px 0; text-align: left;">I love you always, more than words can explain. 🤍</p>
+                    <p style="margin: 0; text-align: center; font-size: 26px;">- your man</p>
+                    <button id="backBtn" style="margin-top: 30px; padding: 12px 25px; background: #FF6863; color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; font-family: Arial, sans-serif;">Back</button>
+                </div>
+            `;
+            
+            // Back button functionality
+            document.getElementById("backBtn").addEventListener("click", function () {
+                // Recreate the envelope
+                const envelopeSection = document.getElementById("envelopeSection");
+                envelopeSection.innerHTML = `
+                    <div id="envelope" class="close">
+                        <div class="front flap"></div>
+                        <div class="front pocket"></div>
+                        <div class="letter">
+                            <div style="padding: 10px; font-size: 10px; line-height: 1.4; color: black; font-family: 'Caveat', sans-serif; text-align: center;">
+                                Click to read...
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Re-add the envelope click listener
+                const newEnvelope = document.getElementById("envelope");
+                newEnvelope.addEventListener("click", openEnvelopeHandler);
+            });
+        };
+        
         // Adding event listeners to Open and Continue buttons after content is loaded
         const envelope = document.getElementById("envelope");
+        const envelopeSection = document.getElementById("envelopeSection");
         const btnContinue = document.getElementById("continue");
 
         // Open the envelope when clicked
-        envelope.addEventListener("click", function () {
-            envelope.classList.add("open");
-            envelope.classList.remove("close");
-        });
+        envelope.addEventListener("click", openEnvelopeHandler);
 
         // Continue button functionality to show question
         btnContinue.addEventListener("click", function () {
@@ -272,9 +310,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("surpriseBtn").addEventListener("click", function () {
                     content.innerHTML = `
 						<div style="text-align: center; margin-top: 20px;">
-							<img src="pictures/itinerary.png" alt="Itinerary Image" style="width: 70%; max-width: 500px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+							<img src="pictures/itenerary.png" alt="Itinerary Image" style="width: 70%; max-width: 500px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
 							<br>
-							<a id="downloadBtn" href="pictures/itinerary.png" download style="display: inline-block; padding: 12px 25px; background: #FF6863; color: white; border-radius: 5px; text-decoration: none; font-size: 18px; font-weight: bold; transition: 0.3s;">Download Itinerary</a>
+							<a id="downloadBtn" href="pictures/itenerary.png" download style="display: inline-block; padding: 12px 25px; background: #FF6863; color: white; border-radius: 5px; text-decoration: none; font-size: 18px; font-weight: bold; transition: 0.3s;">Download Itinerary</a>
 						</div>
 					`;
                 });
